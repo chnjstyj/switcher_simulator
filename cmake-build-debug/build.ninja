@@ -49,17 +49,47 @@ cmake_ninja_workdir = /home/tang/Code/C/simulator/cmake-build-debug/
 
 build cmake_object_order_depends_target_simulator: phony || CMakeFiles/simulator.dir
 
-build CMakeFiles/simulator.dir/main.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/main.cpp || cmake_object_order_depends_target_simulator
-  DEP_FILE = CMakeFiles/simulator.dir/main.cpp.o.d
+build CMakeFiles/simulator.dir/src/main.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/main.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/main.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/simulator.dir
-  OBJECT_FILE_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
 
-build CMakeFiles/simulator.dir/com.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/com.cpp || cmake_object_order_depends_target_simulator
-  DEP_FILE = CMakeFiles/simulator.dir/com.cpp.o.d
+build CMakeFiles/simulator.dir/src/package.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/package.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/package.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/simulator.dir
-  OBJECT_FILE_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
+
+build CMakeFiles/simulator.dir/src/channel.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/channel.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/channel.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
+
+build CMakeFiles/simulator.dir/src/mmu.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/mmu.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/mmu.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
+
+build CMakeFiles/simulator.dir/src/paddr.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/paddr.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/paddr.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
+
+build CMakeFiles/simulator.dir/src/expr.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/expr.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/expr.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
+
+build CMakeFiles/simulator.dir/src/utils.cpp.o: CXX_COMPILER__simulator_unscanned_Debug /home/tang/Code/C/simulator/src/utils.cpp || cmake_object_order_depends_target_simulator
+  DEP_FILE = CMakeFiles/simulator.dir/src/utils.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/simulator.dir
+  OBJECT_FILE_DIR = CMakeFiles/simulator.dir/src
 
 
 # =============================================================================
@@ -69,7 +99,7 @@ build CMakeFiles/simulator.dir/com.cpp.o: CXX_COMPILER__simulator_unscanned_Debu
 #############################################
 # Link the executable simulator
 
-build simulator: CXX_EXECUTABLE_LINKER__simulator_Debug CMakeFiles/simulator.dir/main.cpp.o CMakeFiles/simulator.dir/com.cpp.o
+build simulator: CXX_EXECUTABLE_LINKER__simulator_Debug CMakeFiles/simulator.dir/src/main.cpp.o CMakeFiles/simulator.dir/src/package.cpp.o CMakeFiles/simulator.dir/src/channel.cpp.o CMakeFiles/simulator.dir/src/mmu.cpp.o CMakeFiles/simulator.dir/src/paddr.cpp.o CMakeFiles/simulator.dir/src/expr.cpp.o CMakeFiles/simulator.dir/src/utils.cpp.o
   FLAGS = -g
   LINK_LIBRARIES = -lreadline
   OBJECT_DIR = CMakeFiles/simulator.dir
