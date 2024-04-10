@@ -12,14 +12,102 @@ void swap_package_in_channel(package_in_channel* a, package_in_channel* b)
     *b = temp;
 }
 
-void Channel::add(Package p)
+bool Channel::add(Package p)
 {
+    /*
     auto x = new package_in_channel();
     x->data = p.get_data();
     x->destination = p.get_destination();
     x->level = p.get_level();
-    queue->push(*x);
-    delete x;
+    bool result = queue->push(*x);
+    delete x;*/
+    return false;
+}
+
+bool Channel::add(package_in_channel p)
+{
+    bool result = queue->push(p);
+    return result;
+}
+
+int find_next_space(mem_point* mem)
+{
+    int i = 0;
+    for (i = 0; i < mem_size; i ++)
+    {
+        if (mem[i].is_used == false)
+            break;
+    }
+    return i;
+}
+
+bool Channel::add(mem_point *mem, int data[],Channel* channels)
+{
+    int i = find_next_space(mem);
+    if (i == mem_size)
+        return false;
+    int j = i;
+    int k = 0;
+    int length = Package::s_get_data(data[0]);
+    bool overflow = false;
+    int temp_j;
+    char des = Package::s_get_destination(data[0]);
+    char level = Package::s_get_level(data[0]);
+    package_in_channel p = {des,level,(char)length,(char)i};
+    for (; k < length; k++)
+    {
+        if (j < mem_size)
+        {
+            (mem+j) -> is_used = true;
+            (mem+j) -> data = data[k];
+            j++;
+            temp_j = j;
+            if (k != mem_size && (mem+j) -> is_used == true && j != mem_size)
+            {
+                //not full
+                j = find_next_space(mem);
+                if (j == mem_size)
+                {
+                    overflow = true;
+                    break;
+                }
+                else
+                {
+                    (mem+temp_j) -> next = (mem+j);
+                }
+            }
+            else if (k != mem_size && (mem+j) -> is_used == false && j != mem_size)
+            {
+                (mem+j-1) -> next = (mem+j);
+            }
+            else
+            {
+                overflow = true;
+            }
+
+        }
+        else
+        {
+            overflow = true;
+            break;
+        }
+    }
+    if (overflow)
+    {
+        while ((mem+i) -> next != NULL)
+        {
+            i = ((mem+i) -> next) - (mem+i) + i;
+            (mem+i) -> next = NULL;
+        }
+        return false;
+    }
+    else
+    {
+        (mem + j - 1)->next = NULL;
+        (channels + des) -> queue->push(p);
+        return true;
+    }
+
 }
 
 Channel::Channel(bool input)
@@ -35,8 +123,8 @@ Channel::~Channel()
 
 bool PQueue::compare(package_in_channel *a, package_in_channel *b)
 {
-    if (a->level >= b->level) return true;
-    else return false;
+    if (a->level >= b->level) return false;
+    else return true;
 }
 
 bool PQueue::push(package_in_channel p)
@@ -75,6 +163,10 @@ bool PQueue::pop(package_in_channel *p)
     if (elements != NULL && size > 0)
     {
         swap_package_in_channel(&elements[pos],&elements[size - 1]);
+        p->level = elements[size - 1].level;
+        p->destination = elements[size - 1].destination;
+        p->length = elements[size -1].length;
+        p->pos = elements[size -1].pos;
         size--;
         while (pos < size-1)
         {
@@ -119,20 +211,63 @@ bool PQueue::pop(package_in_channel *p)
     return r;
 }
 
-Package Channel::show_top(int length)
+bool Channel::output(mem_point *mem,int package[])
 {
-    if (queue->size != 0)
+    if (queue->size == 0)
+        return false;
+    package_in_channel p = {0};
+    if (queue->pop(&p))
     {
-        auto temp = queue->elements;
-        //Package r = Package(temp->data,length);
-        char p[2] = {0};
-        p[0] = temp->destination | (temp->level << 4);
-        Package t = Package(p,length);
-        return t;
+        int data[32] = {0};
+        mem_point* i = mem + p.pos;
+        mem_point* temp_i = NULL;
+        int j = 0;
+        if (i->is_used == true)
+        {
+            do
+            {
+                data[j] = i -> data;
+                j++;
+                i = i -> next;
+            } while (i != NULL);
+            for (j = 0; j < 32; j++)
+            {
+                package[j] = data[j];
+            }
+            i = mem + p.pos;
+            while (i -> next != NULL)
+            {
+                temp_i = i -> next;
+                i -> next = NULL;
+                i -> is_used = false;
+                i = temp_i ;
+            }
+            i -> is_used = false;
+        }
     }
     else
     {
-        Package t = Package(NULL,length);
-        return t;
+        package = NULL;
+        return false;
     }
+    return true;
+}
+
+bool Channel::trans(Channel *src, Channel *des)
+{
+    bool r = false;
+    /*
+    if (src->is_input == false || des->is_input == true)
+    {
+        return r;
+    }
+    package_in_channel temp = {0};
+    if(src->output(&temp))
+    {
+        if(des->add(temp))
+        {
+            r = true;
+        }
+    }*/
+    return r;
 }

@@ -6,13 +6,15 @@
 #define SIMULATOR_CHANNEL_H
 
 #include "package.h"
+#include "common.h"
 
 
 typedef struct package_in_channel
 {
-    char* data;
     char destination;
     char level;
+    char length;
+    char pos;
 }package_in_channel;
 
 class PQueue
@@ -40,8 +42,12 @@ private:
 public:
     Channel(bool input);
     ~Channel();
-    void add(Package p);
-    Package show_top(int length);
+    bool add(Package p);
+    bool add(package_in_channel p);
+    bool add(mem_point* mem,int* data,Channel* channels);
+    //Package show_top(int length);
+    bool output(mem_point *mem,int* package);
+    static bool trans(Channel* src,Channel* des);
 };
 
 #endif //SIMULATOR_CHANNEL_H

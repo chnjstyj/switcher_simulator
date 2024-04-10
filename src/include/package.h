@@ -10,13 +10,18 @@ class Package
 private :
     int package_length;
     bool is_available;
-    char* package;
+    int* package;
 
 public :
-    Package(char* package,int length);
+    Package(int* package,int length);
     char get_destination();
     char get_level();
-    char* get_data();
+    int* get_data();
+    char get_length();
+    static char s_get_data(int data_c);
+    static char s_get_destination(int data_c);
+    static char s_get_level(int data_c);
+    // length level des
 };
 
 #endif //SIMULATOR_PACKAGE_H
